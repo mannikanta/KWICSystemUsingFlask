@@ -1,0 +1,22 @@
+<root>
+    <originalSentence>good morning mani kanta
+        <sentence>kanta good morning mani</sentence>
+        <sentence>mani kanta good morning</sentence>
+        <sentence>morning mani kanta good</sentence>
+    </originalSentence>
+    <originalSentence>a new message the message needs to be tested This is
+        <sentence>be tested This is a new message the message needs to</sentence>
+        <sentence>message needs to be tested This is a new message the</sentence>
+        <sentence>message the message needs to be tested This is a new</sentence>
+        <sentence>needs to be tested This is a new message the message</sentence>
+        <sentence>new message the message needs to be tested This is a</sentence>
+        <sentence>tested This is a new message the message needs to be</sentence>
+        <sentence>This is a new message the message needs to be tested</sentence>
+        <sentence>to be tested This is a new message the message needs</sentence>
+    </originalSentence>
+    <originalSentence>Hi mani, the manni is kanta
+        <sentence>kanta Hi mani, the manni is</sentence>
+        <sentence>mani, the manni is kanta Hi</sentence>
+        <sentence>manni is kanta Hi mani, the</sentence>
+    </originalSentence>
+<originalSentence>Dhoni Mahendra Singh<sentence>Mahendra Singh Dhoni</sentence><sentence>Singh Dhoni Mahendra</sentence></originalSentence></root>

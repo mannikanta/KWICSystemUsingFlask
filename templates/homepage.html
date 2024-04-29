@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Example</title>
+        <style>
+        /* Style for buttons */
+        #btn-generate, #btn-retrieve {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s; /* Transition duration */
+            cursor: pointer;
+        }
+
+        /* Change background color on hover */
+        #btn-generate:hover, #btn-retrieve:hover {
+            background-color: #45a049; /* Darker green */
+        }
+    </style>
+
+</head>
+<body align="center">
+    <div id="input-container">
+        <h2>Click on any operation of your choice:</h2>
+        <button id="btn-generate" onclick=generateText()>Generate Sentences</button>
+        <button id="btn-retrieve" onclick=retrieveOutput()>Retrieve Sentences</button>
+    </div>
+    <br>
+    <div id="output-container">
+
+    </div>
+</body>
+</html>
+
+<script>
+    function generateText(){
+         // Fetch request parameters from the URL
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+
+            // Iterate over the values and send each value as a query parameter to the "/generate" endpoint
+            Object.values(params).forEach(value => {
+                const url = `/generate?sentence=${encodeURIComponent(value)}`; // Include value as a query parameter
+                fetch(url)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(data => {
+                        console.log('Response from /generate endpoint:', data);
+                        displayOutput(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+    }
+
+     function displayOutput(data) {
+        const outputContainer = document.getElementById('output-container');
+        // Clear previous content
+        outputContainer.innerHTML = '';
+        // Append each element of the data array to the output container
+        data.forEach(element => {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = element;
+            outputContainer.appendChild(paragraph);
+        });
+    }
+
+    function retrieveOutput(){
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            Object.values(params).forEach(value => {
+                fetch('/retrieve', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ searchText: value }) // Send each value as a request parameter with the key "sentence"
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                }).then(data => {
+                    if (data.length > 0) {
+                        displayOutput(data);
+                    } else {
+                        displayOutput(['No data found with the given keyword']);
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+    }
+</script>
